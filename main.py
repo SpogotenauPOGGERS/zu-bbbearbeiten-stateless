@@ -10,7 +10,8 @@ def index():
 @app.route('/add', methods=["POST"])
 def add():
     title = request.form.get("title")
-    helper.add(title)                        #frage 2
+    date = request.form.get("date")
+    helper.add(title, date)                        #frage 2
     return redirect(url_for("index"))
 
 @app.route('/update/<int:index>') #frage 4

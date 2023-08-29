@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import datetime
 
 todos = []
 
@@ -6,12 +7,14 @@ todos = []
 @dataclass
 class Todo:
     title: str
+    date: datetime.date 
     isCompleted: bool = False
 
 
-def add(title):
-    title = title.replace('b', 'bbb').replace('B', 'Bbb') # frage 1
-    todos.append(Todo(title))
+def add(title, date):
+    title = title.replace('b', 'bbb').replace('B', 'Bbb') # frage 1d
+    
+    todos.append(Todo(title, date))
 
 
 def get_all():
