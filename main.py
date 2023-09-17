@@ -1,20 +1,27 @@
+from flask import Flask, Response, redirect, render_template, request, url_for
+
 import helper
-from flask import Flask, request, Response, render_template, redirect, url_for
+
 app = Flask(__name__)
+
 
 @app.route("/")
 def index():
-    todos = helper.get_all()
-    return render_template('index.html', todos=todos)  # frage 3
+    items = helper.get_all()
+    return render_template("index.html", items=items)
 
-@app.route('/add', methods=["POST"])
+
+@app.route("/add", methods=["POST"])
 def add():
-    title = request.form.get("title")
-    date = request.form.get("date")
-    helper.add(title, date)                        #frage 2
+    text = request.form.get("text")
+    date = request.form.get("deadline")
+    category = request.form.get("category")
+    description = request.form.get("description")
+    helper.add(text, date=date, category=category, description=description)
     return redirect(url_for("index"))
 
-@app.route('/update/<int:index>') #frage 4
+
+@app.route("/update/<int:index>")
 def update(index):
     helper.update(index)
     return redirect(url_for("index"))

@@ -1,29 +1,48 @@
-from dataclasses import dataclass
 import datetime
+import operator
+from dataclasses import dataclass
 
-todos = []
+items = []
 
 
 @dataclass
-class Todo:
-    title: str
-    date: datetime.date 
+class Item:
+    text: str
+    date: datetime
+    category: str
+    description: str
     isCompleted: bool = False
 
 
-def add(title, date):
-    title = title.replace('b', 'bbb').replace('B', 'Bbb') # frage 1d
-    
-    todos.append(Todo(title, date))
+def oneWeekFromToday():
+    today = datetime.datetime.now()
+    oneWeek = datetime.timedelta(weeks=1)
+    return today + oneWeek
+
+
+def add(text, date=None, category=None, description=None):
+    text = text.replace("b", "bbb").replace("B", "Bbb")
+    if date is None:
+        date = oneWeekFromToday()
+    else:
+        date = datetime.datetime.strptime(date, "%Y-%m-%d")
+
+    if category is None:
+        category = "default"
+
+    if description is None:
+        description = ""
+    items.append(Item(text, date, category, description))
+    items.sort(key=lambda x: (x.date, x.category))
 
 
 def get_all():
-    return todos
+    return items
 
 
 def get(index):
-    return todos[index]
+    return items[index]
 
 
 def update(index):
-    todos[index].isCompleted = not todos[index].isCompleted
+    items[index].isCompleted = not items[index].isCompleted
