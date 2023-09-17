@@ -11,6 +11,15 @@ def index():
     return render_template("index.html", items=items)
 
 
+@app.route("/download")
+def get_csv():
+    return Response(
+        helper.get_csv(),
+        mimetype="text/csv",
+        headers={"Content-disposition": "attachment; filename=zu-bbbearbeiten.csv"},
+    )
+
+
 @app.route("/add", methods=["POST"])
 def add():
     text = request.form.get("text")
