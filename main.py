@@ -11,6 +11,7 @@ def index():
     return render_template("index.html", items=items)
 
 
+# comment
 @app.route("/add", methods=["POST"])
 def add():
     text = request.form.get("text")
